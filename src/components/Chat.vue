@@ -1,25 +1,25 @@
 <template lang="pug">
-  v-layout(row wrap)
-    v-flex(xs6 offset-xs3)
+  v-container(fluid fill-height)
+    v-layout(align-center justify-center)
+      v-flex(xs8)
 
-      v-toolbar(dark color="secondary")
-        v-toolbar-title Чат
+        v-toolbar(dark color="secondary")
+          v-toolbar-title Чат
 
-      v-card(class="pa-0")
-        v-container(fluid class="pa-3")
-          v-layout(row wrap)
-          ul
-            li(v-for="message in messages")
-              span(class="username" :class="[ isSameUser(message) ? 'light-blue--text' : 'light-green--text']") {{message.name}}
-              span(class="grey--text text--darken-2") {{message.text}}
-              span(class="grey--text text--lighten-1 time") {{message.time}}
-        v-divider
-        v-card-actions(class="pa-3")
-          v-text-field(v-model="message_field"
-                        hide-details
-                        placeholder="Введите сообщение"
-                        @keyup.enter="sendMessage")
-    Snackbar(:error_message="error_message")
+        v-card(class="pa-0")
+          v-container(fluid class="pa-3")
+            ul(class="frame" v-chat-scroll="{always: false, smooth: true}")
+              li(v-for="message in messages" :key="message.id")
+                span(class="username" :class="[ isSameUser(message) ? 'light-blue--text' : 'light-green--text']") {{message.name}}
+                span(class="grey--text text--darken-2") {{message.text}}
+                span(class="grey--text text--lighten-1 time") {{message.time}}
+          v-divider
+          v-card-actions(class="pa-3")
+            v-text-field(v-model="message_field"
+                          hide-details
+                          placeholder="Введите сообщение"
+                          @keyup.enter="sendMessage")
+      Snackbar(:error_message="error_message")
 </template>
 
 <script>
@@ -85,6 +85,25 @@
 </script>
 
 <style scoped>
+  .frame {
+    min-height: 350px;
+    max-height: 700px;
+    overflow: auto;
+  }
+
+  .frame::-webkit-scrollbar {
+    width: 3px;
+  }
+
+  .frame::-webkit-scrollbar-track {
+    background: #FEFEFE;
+  }
+
+  .frame::-webkit-scrollbar-thumb {
+    background: #424242;
+  }
+
+
   li {
     list-style-type: none;
   }

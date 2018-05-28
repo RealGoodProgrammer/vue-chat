@@ -4,7 +4,10 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import Vuetify from 'vuetify'
+import ChatScroll from 'vue-chat-scroll'
 import 'vuetify/dist/vuetify.min.css'
+
+Vue.use(ChatScroll)
 
 Vue.use(Vuetify, { theme: {
   primary: '#212121',
