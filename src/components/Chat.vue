@@ -10,7 +10,7 @@
           v-layout(row wrap)
           ul
             li(v-for="message in messages")
-              span(class="indigo--text username") {{message.name}}
+              span(class="username" :class="[ isSameUser(message) ? 'light-blue--text' : 'light-green--text']") {{message.name}}
               span(class="grey--text text--darken-2") {{message.text}}
               span(class="grey--text text--lighten-1 time") {{message.time}}
         v-divider
@@ -24,6 +24,7 @@
 <script>
   export default {
     name: 'Chat',
+    props: ['name'],
     data () {
       return {
         message_field: null,
@@ -47,6 +48,11 @@
             time: 1239849899
           }
         ]
+      }
+    },
+    methods: {
+      isSameUser (message) {
+        return message.name === this.name
       }
     }
 

@@ -42,7 +42,7 @@
     methods: {
       login () {
         if (this.name_field) {
-
+          this.$router.push({ name: 'Chat', params: { name: this.name_field } })
         } else {
           this.error_message.snackbar_visibility = true
         }
