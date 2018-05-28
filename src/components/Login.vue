@@ -3,6 +3,7 @@
     v-layout(align-center justify-center)
       v-flex(xs12 sm8 md4)
         v-card(class="elevation-12")
+
           v-toolbar(dark color="secondary")
             v-toolbar-title Авторизация
 
@@ -14,15 +15,37 @@
 
           v-card-actions
             v-spacer
-            v-btn(color="secondary") Войти
+            v-btn(color="secondary" @click="login") Войти
+
+    Snackbar(:error_message="error_message")
 </template>
 
 <script>
+  import Snackbar from '@/components/common/Snackbar'
+
   export default {
     name: 'Login',
+    components: {
+      Snackbar
+    },
     data () {
       return {
-        name_field: null
+        name_field: null,
+        error_message: {
+          text: 'Введите имя :)',
+          color: 'error',
+          timeout: 3000,
+          snackbar_visibility: false
+        }
+      }
+    },
+    methods: {
+      login () {
+        if (this.name_field) {
+
+        } else {
+          this.error_message.snackbar_visibility = true
+        }
       }
     }
   }
