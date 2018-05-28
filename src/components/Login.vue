@@ -11,7 +11,8 @@
               v-text-field(prepend-icon="person"
                             v-model="name_field"
                             label="Отображаемое имя"
-                            placeholder="Алексей")
+                            placeholder="Алексей"
+                            @keyup.enter="login")
 
           v-card-actions
             v-spacer
