@@ -25,8 +25,9 @@
 <script>
   import Snackbar from '@/components/common/Snackbar'
   import db from '@/firebase/index'
+  import moment from 'moment'
 
-  const collection = db.collection('messages')
+  const messagesCollection = db.collection('messages')
 
   export default {
     name: 'Chat',
@@ -52,7 +53,7 @@
       },
       sendMessage () {
         if (this.message_field) {
-          collection.add({
+          messagesCollection.add({
             text: this.message_field,
             name: this.name,
             time: Date.now()
@@ -66,7 +67,9 @@
       }
     },
     created () {
-      collection.orderBy('time').onSnapshot(snapshot => {
+      // TODO: set dynamic
+      moment.locale('ru')
+      messagesCollection.orderBy('time').onSnapshot(snapshot => {
         snapshot.docChanges().forEach(change => {
           if (change.type === 'added') {
             let doc = change.doc
@@ -74,7 +77,7 @@
               id: doc.id,
               name: doc.data().name,
               text: doc.data().text,
-              time: doc.data().time
+              time: moment(doc.data().time).format('MMMM Do YYYY, HH:mm:ss')
             })
           }
         })
