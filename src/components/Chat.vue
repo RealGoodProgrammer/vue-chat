@@ -4,7 +4,7 @@
       v-flex(xs8)
 
         v-toolbar(dark color="secondary")
-          v-toolbar-title Чат
+          v-toolbar-title {{title_header}}
 
         v-card(class="pa-0")
           v-container(fluid class="pa-3")
@@ -15,9 +15,10 @@
                 span(class="grey--text text--lighten-1 time") {{message.time}}
           v-divider
           v-card-actions(class="pa-3")
-            v-text-field(v-model="message_field"
+            v-text-field(v-model="message_field.input"
+                          id="message_field"
                           hide-details
-                          placeholder="Введите сообщение"
+                          :placeholder="message_field.placeholder"
                           @keyup.enter="sendMessage")
       Snackbar(:error_message="error_message")
 </template>
@@ -37,7 +38,11 @@
     props: ['name'],
     data () {
       return {
-        message_field: null,
+        title_header: 'Чат',
+        message_field: {
+          input: null,
+          placeholder: 'Введите сообщение'
+        },
         error_message: {
           text: 'Сообщение не может быть пустым!',
           color: 'error',
@@ -52,15 +57,15 @@
         return message.name === this.name
       },
       sendMessage () {
-        if (this.message_field) {
+        if (this.message_field.input) {
           messagesCollection.add({
-            text: this.message_field,
+            text: this.message_field.input,
             name: this.name,
             time: Date.now()
           }).catch(error => {
             console.error(error)
           })
-          this.message_field = null
+          this.message_field.input = null
         } else {
           this.error_message.snackbar_visibility = true
         }

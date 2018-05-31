@@ -1,6 +1,12 @@
-import Vue from 'vue'
+import 'babel-polyfill'
 
+import Vue from 'vue'
+import Vuetify from 'vuetify'
+
+Vue.use(Vuetify)
 Vue.config.productionTip = false
+
+window.Vue = Vue
 
 // require all test files (files that ends with .spec.js)
 const testsContext = require.context('./specs', true, /\.spec$/)
